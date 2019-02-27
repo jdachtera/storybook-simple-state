@@ -13,7 +13,8 @@ export const State = ({ render, initial, storeKey = 'default' }) => {
   });
 }
 
-export const withState = (...args) => (decoratedStory) => {
+export const withState = (...originalArgs) => (decoratedStory) => {
+  const args = originalArgs.slice(); //copy original arguments due to mutation below
   const storyFn = typeof args[args.length - 1] === 'function' ? args.pop() : decoratedStory;
   const [initial, storeKey] = args;
   return <State storeKey={storeKey} initial={initial} render={storyFn} />
